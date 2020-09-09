@@ -38,7 +38,7 @@ class ChatScreen extends StatelessWidget {
       ),
       body: StreamBuilder(
         stream: Firestore.instance
-            .collection('chats/Lo0U6enClIFlledyXVVz/messages')
+            .collection('chats')
             .snapshots(),
         builder: (ctx, streamSnapshot) {
           if (streamSnapshot.connectionState == ConnectionState.waiting) {
@@ -51,7 +51,37 @@ class ChatScreen extends StatelessWidget {
             itemCount: documents.length,
             itemBuilder: (ctx, index) => Container(
               padding: EdgeInsets.all(8),
-              child: Text(documents[index]['text']),
+              child:Card(
+                clipBehavior: Clip.antiAlias,
+                child: Column(
+                  children: [
+                    Image.network(documents[index]['photo'].toString()),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'Likes: '+ documents[index]['likes'].toString(),
+                        style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                      ),
+                    ),
+                    ButtonBar(
+                      alignment: MainAxisAlignment.end,
+                      children: [
+                        FlatButton(
+                          textColor: const Color(0xFF6200EE),
+                          onPressed: () {
+                            documents[index].updateData({
+
+                            });
+
+                          },
+                          child: const Text('LIKE'),
+                        ),
+                      ],
+                    ),
+
+                  ],
+                ),
+              ),
             ),
           );
         },
