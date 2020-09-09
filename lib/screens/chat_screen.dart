@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pilgrimage/functions.dart';
 
 class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('FlutterChat'),
+
+        title: Text('Pilgrimage'),
+
         actions: [
           DropdownButton(
             icon: Icon(
@@ -34,8 +37,38 @@ class ChatScreen extends StatelessWidget {
               }
             },
           ),
+
         ],
       ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.orangeAccent,
+              ),
+              child: Text(
+                "ISS Locator",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.info),
+              title: Text('Developer information'),
+              onTap: () {
+                launchURL();
+              },
+            ),
+          ],
+        ),
+      ),
+
+
+
       body: StreamBuilder(
         stream: Firestore.instance
             .collection('chats')
@@ -86,14 +119,8 @@ class ChatScreen extends StatelessWidget {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Firestore.instance
-              .collection('chats/Lo0U6enClIFlledyXVVz/messages')
-              .add({'text': 'This was added by clicking the button!'});
-        },
-      ),
     );
+
   }
+
 }
