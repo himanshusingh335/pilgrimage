@@ -69,9 +69,9 @@ class ChatScreen extends StatelessWidget {
                         FlatButton(
                           textColor: const Color(0xFF6200EE),
                           onPressed: () {
-                            documents[index].updateData({
-
-                            });
+                            documents[index].reference.updateData({
+                              'likes': documents[index]['likes']+1
+                            },);
 
                           },
                           child: const Text('LIKE'),
