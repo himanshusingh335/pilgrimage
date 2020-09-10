@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,9 +9,7 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
         title: Text('Pilgrimage'),
-
         actions: [
           DropdownButton(
             icon: Icon(
@@ -37,7 +36,6 @@ class ChatScreen extends StatelessWidget {
               }
             },
           ),
-
         ],
       ),
       drawer: Drawer(
@@ -46,10 +44,10 @@ class ChatScreen extends StatelessWidget {
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.orangeAccent,
+                color: Colors.pink,
               ),
               child: Text(
-                "ISS Locator",
+                "Pilgrimage",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -66,13 +64,8 @@ class ChatScreen extends StatelessWidget {
           ],
         ),
       ),
-
-
-
       body: StreamBuilder(
-        stream: Firestore.instance
-            .collection('chats')
-            .snapshots(),
+        stream: Firestore.instance.collection('chats').snapshots(),
         builder: (ctx, streamSnapshot) {
           if (streamSnapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -84,16 +77,20 @@ class ChatScreen extends StatelessWidget {
             itemCount: documents.length,
             itemBuilder: (ctx, index) => Container(
               padding: EdgeInsets.all(8),
-              child:Card(
+              child: Card(
                 clipBehavior: Clip.antiAlias,
                 child: Column(
                   children: [
-                    Image.network(documents[index]['photo'].toString()),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        'Likes: '+ documents[index]['likes'].toString(),
-                        style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                    Image.network(documents[index]['photo'].toString(),
+                        width: 390, height: 390, fit: BoxFit.fill),
+                    ListTile(
+                      title: Text(
+                        'LIKES: ' + documents[index]['likes'].toString(),
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                            color: Colors.pink),
                       ),
                     ),
                     ButtonBar(
@@ -102,16 +99,23 @@ class ChatScreen extends StatelessWidget {
                         FlatButton(
                           textColor: const Color(0xFF6200EE),
                           onPressed: () {
-                            documents[index].reference.updateData({
-                              'likes': documents[index]['likes']+1
-                            },);
-
+                            documents[index].reference.updateData(
+                              {'likes': documents[index]['likes'] + 1},
+                            );
                           },
                           child: const Text('LIKE'),
                         ),
+                        FlatButton(
+                          textColor: const Color(0xFF6200EE),
+                          onPressed: () {
+                            documents[index].reference.updateData(
+                              {'likes': documents[index]['likes'] - 1},
+                            );
+                          },
+                          child: const Text('DISLIKE'),
+                        ),
                       ],
                     ),
-
                   ],
                 ),
               ),
@@ -120,7 +124,5 @@ class ChatScreen extends StatelessWidget {
         },
       ),
     );
-
   }
-
 }
