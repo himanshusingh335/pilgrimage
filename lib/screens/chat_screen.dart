@@ -89,8 +89,10 @@ class ChatScreen extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 30,
-                            color: Colors.pink),
+                          fontStyle: FontStyle.italic,
+                            fontSize: 20,
+                            color: Colors.pink,
+                          ),
                       ),
                     ),
                     ButtonBar(

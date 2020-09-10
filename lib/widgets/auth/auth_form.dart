@@ -50,6 +50,16 @@ class _AuthFormState extends State<AuthForm> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
+                  Text(
+                    _isLogin ?'Pilgrimage: Continue your Journey' : 'Pilgrimage: Begin your Journey' ,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic,
+                      fontSize: 23,
+                      color: Colors.pinkAccent,
+                    ),
+                  ),
                   TextFormField(
                     key: ValueKey('email'),
                     validator: (value) {
